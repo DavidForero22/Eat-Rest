@@ -1,2 +1,0 @@
-# Eat-Rest
-Pending description
