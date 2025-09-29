@@ -4,11 +4,13 @@ import viteLogo from '/vite.svg'
 import './App.css'
 
 import {testApi as APIConnector}  from "./modules/ApiConnector.jsx";
+import Header from  "./modules/header.jsx";
 
 function App() {
 
   return (
     <>
+      <Header/>
       <APIConnector/>
     </>
   )
