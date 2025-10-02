@@ -1,7 +1,5 @@
 #root {
   max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
   text-align: center;
 }
 
@@ -39,4 +37,62 @@
 
 .read-the-docs {
   color: #888;
+}
+
+/* -- My classes -- */
+
+#header {
+  background-color: purple;
+  display: flex; 
+  width: 96vw; 
+  gap: 50px;
+  padding: 3vh 2vw;
+  font-size: 20px;
+}
+
+#header a {
+  color: white;
+  transition: 0.3s;
+}
+
+#header a:hover {
+  color: rgb(255, 77, 77);
+  transform: scale(1.05);
+}
+
+.best-rated-row {
+  display: flex;
+  margin: auto;
+  justify-content: center;
+  gap: 3vw;
+}
+
+.card {
+  background-color: white;
+  border: 2px solid yellow;
+  border-radius: 10%;
+  width: 200px;
+  transition: 0.4s;
+}
+
+.card:hover {
+  transform: scale(1.1);
+}
+
+.card p {
+  color: black;
+
+}
+
+.card-img {
+  width: 200px;
+  height: 130px;
+  object-fit: cover;
+  object-position: center;
+}
+
+.card-description {
+  font-size: 12px;
+  text-align: left;
+  color: rgb(141, 141, 141) !important;
 }
