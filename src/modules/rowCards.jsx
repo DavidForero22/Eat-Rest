@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import Card from './card.jsx';
 import cardLayout from "../assets/card-layout.png";
 
-const bestRated = ({data, title}) => {
+const RowCards = ({data, title}) => {
     const [imgs, setImgs] = useState([]);
     const [titles, setTitles] = useState([]);
     const [descriptions, setDescs] = useState([]);
@@ -11,26 +11,29 @@ const bestRated = ({data, title}) => {
 
     useEffect(() => {
         if (data && data.length > 0) {
-        const startIndex = Math.floor(Math.random() * data.length);
-        const tempImgs  = [];
-        const tempTitles = [];
-        const tempDescs = [];
-        const tempLinks = [];
+            const startIndex = Math.floor(Math.random() * data.length);
+            const tempImgs  = [];
+            const tempTitles = [];
+            const tempDescs = [];
+            const tempLinks = [];
 
-        for (let i = 0; i < 4; i++) {
-            const index = (startIndex + i) % data.length;
-            tempImgs.push(data[index].image || cardLayout);
-            tempTitles.push(data[index].title || "undefinied");
-            tempDescs.push(data[index].description || "undefinied");
-            tempLinks.push(data[index].uri || "undefinied");
-        }
+            for (let i = 0; i < 4; i++) {           
+                const index = (startIndex + i) % data.length;   
 
-        setImgs(tempImgs);
-        setTitles(tempTitles);
-        setDescs(tempDescs);
-        setLinks(tempLinks);
+                tempImgs.push(data[index].image || data[index]["Foto 1"] || cardLayout);
+                tempTitles.push(data[index].title || data[index]["Nombre"] || "Undefinied");
+                tempDescs.push(data[index].streetAddress || data[index]["Dirección"] || "Undefinied");
+                tempLinks.push(data[index].uri || data[index]["URL Real"] || "Undefinied");
+                console.log(data[index]);
+            }
+
+            setImgs(tempImgs);
+            setTitles(tempTitles);
+            setDescs(tempDescs);
+            setLinks(tempLinks);
         }
     }, [data]);
+
     return (
         <div>   
             <h2>{title}</h2>
@@ -44,4 +47,4 @@ const bestRated = ({data, title}) => {
     )
 }
 
-export default bestRated;
+export default RowCards;
