@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 
 import Card from './card.jsx';
-import cardLayout from "../assets/card-layout.png";
 
 const RowCards = ({data, title}) => {
     const [imgs, setImgs] = useState([]);
@@ -20,10 +19,10 @@ const RowCards = ({data, title}) => {
             for (let i = 0; i < 4; i++) {           
                 const index = (startIndex + i) % data.length;   
 
-                tempImgs.push(data[index].image || data[index]["Foto 1"] || cardLayout);
-                tempTitles.push(data[index].title || data[index]["Nombre"] || "Undefinied");
-                tempDescs.push(data[index].streetAddress || data[index]["Dirección"] || "Undefinied");
-                tempLinks.push(data[index].uri || data[index]["URL Real"] || "Undefinied");
+                tempImgs.push(data[index].image || data[index]["Foto 1"]);
+                tempTitles.push(data[index].title || data[index]["Nombre"]);
+                tempDescs.push(data[index].streetAddress || data[index]["Dirección"]);
+                tempLinks.push(data[index].uri || data[index]["URL Real"]);
                 console.log(data[index]);
             }
 

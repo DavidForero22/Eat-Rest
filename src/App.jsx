@@ -15,15 +15,13 @@ function App() {
   useEffect(() => {
     const fetchRestaurants = async () => {
       let data = await callRestaurants("zaragoza", "restaurant");
-      setZaragozaRestaurants(data.result); 
-      console.log(data);
+      setZaragozaRestaurants(data); 
 
       data = await callRestaurants("murcia", "restaurant");
       setMurciaRestaurants(data);
 
       data = await callRestaurants("zaragoza", "hotel");
       setZaragozaHotels(data);
-      console.log(data);
 
       data = await callRestaurants("murcia", "hotel");
       setMurciaHotels(data);
