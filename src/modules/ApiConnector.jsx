@@ -18,8 +18,7 @@ export const callRestaurants = async (location, type) => {
             : console.log('Error while connecting to api: Type not found.')
         );
         data = await response.json();
-        // console.log(data);
-        data = data.filter(item => item.hasOwnProperty('Foto 1'));
+        data = data.filter(item => item.hasOwnProperty('Foto 1') && item['URL Corta'] != "");
     }
     return data;
 }
