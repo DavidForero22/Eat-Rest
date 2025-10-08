@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import './App.css'
 
 import Header from  "./modules/header.jsx";
-import RowCards from "./modules/rowCards.jsx";
+import Cards from "./modules/cards.jsx";
+import Filter from "./modules/filter.jsx";
 import {callRestaurants} from "./modules/ApiConnector.jsx";
 
 function App() {
@@ -12,7 +13,6 @@ function App() {
   const [zaragozaHotels, setZaragozaHotels] = useState([]);
   const [murciaHotels, setMurciaHotels] = useState([]);
 
-  useEffect(() => {
     const fetchRestaurants = async () => {
       let data = await callRestaurants("zaragoza", "restaurant");
       setZaragozaRestaurants(data); 
@@ -26,19 +26,20 @@ function App() {
       data = await callRestaurants("murcia", "hotel");
       setMurciaHotels(data);
     };
+
+  useEffect(() => {
     fetchRestaurants();
   }, []);
 
   return (
     <>
       <Header/>
-      <RowCards data={zaragozaRestaurants} title="Restaurantes en Zaragoza"/>
-      <hr/>
-      <RowCards data={murciaRestaurants} title="Restaurantes en Murcia"/>
-      <hr/>
-      <RowCards data={zaragozaHotels} title="Hoteles en Zaragoza"/>
-      <hr/>
-      <RowCards data={murciaHotels} title="Hoteles en Murcia"/>
+      <div style={{display: "flex"}}>
+        <Filter/>
+        <div>
+        <Cards data={zaragozaHotels}/>
+        </div>
+      </div>     
     </>
   )
 }
