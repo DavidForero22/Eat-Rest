@@ -1,5 +1,3 @@
-import React from 'react';
-
 const FilterSidebar = ({ isOpen, toggleSidebar }) => {
     return (
         <aside className={`filter-sidebar ${!isOpen ? 'collapsed' : ''}`}>
