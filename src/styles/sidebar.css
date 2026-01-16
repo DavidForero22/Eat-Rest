@@ -1,0 +1,63 @@
+.filter-sidebar {
+    background-color: var(--color-white);
+    padding: 2rem;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-soft);
+    height: fit-content;
+    position: sticky;
+    top: 100px;
+}
+
+.filter-sidebar h2 {
+    font-size: 1.25rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 2px solid var(--color-orange);
+    padding-bottom: 0.5rem;
+    display: inline-block;
+}
+
+.filter-group {
+    margin-bottom: 1.5rem;
+}
+
+.filter-group label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    color: var(--color-dark-gray);
+}
+
+.checkbox-wrapper {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5rem;
+    cursor: pointer;
+}
+
+.checkbox-wrapper input {
+    accent-color: var(--color-orange);
+    margin-right: 0.5rem;
+    width: 16px;
+    height: 16px;
+}
+
+.input-text {
+    width: 100%;
+    padding: 0.6rem;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    outline: none;
+}
+
+.input-text:focus {
+    border-color: var(--color-orange);
+}
+
+/* Responsive del Sidebar */
+@media (max-width: 768px) {
+    .filter-sidebar {
+        position: static;
+        margin-bottom: 2rem;
+    }
+}
