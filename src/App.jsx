@@ -1,47 +1,66 @@
 import { useEffect, useState } from "react";
-import './App.css'
+// Importamos los estilos globales
+import "./styles/main.css";
 
-import Header from  "./modules/header.jsx";
-import Cards from "./modules/cards.jsx";
-import Filter from "./modules/filter.jsx";
-import {callRestaurants} from "./modules/ApiConnector.jsx";
+// Importamos los componentes organizados
+import Header from "./components/layout/Header";
+import CardGrid from "./components/ui/CardGrid";
+import FilterSidebar from "./components/ui/FilterSidebar";
+import { callRestaurants } from "./services/ApiConnector";
 
 function App() {
-
   const [zaragozaRestaurants, setZaragozaRestaurants] = useState([]);
   const [murciaRestaurants, setMurciaRestaurants] = useState([]);
   const [zaragozaHotels, setZaragozaHotels] = useState([]);
   const [murciaHotels, setMurciaHotels] = useState([]);
 
-    const fetchRestaurants = async () => {
+  // Se mantiene tu lógica original de carga de datos
+  const fetchRestaurants = async () => {
+    // Nota: Es recomendable manejar errores con try/catch aquí también
+    try {
       let data = await callRestaurants("zaragoza", "restaurant");
-      setZaragozaRestaurants(data); 
+      setZaragozaRestaurants(data || []);
 
       data = await callRestaurants("murcia", "restaurant");
-      setMurciaRestaurants(data);
+      setMurciaRestaurants(data || []);
 
       data = await callRestaurants("zaragoza", "hotel");
-      setZaragozaHotels(data);
+      setZaragozaHotels(data || []);
 
       data = await callRestaurants("murcia", "hotel");
-      setMurciaHotels(data);
-    };
+      setMurciaHotels(data || []);
+    } catch (error) {
+      console.error("Error cargando datos iniciales", error);
+    }
+  };
 
   useEffect(() => {
     fetchRestaurants();
   }, []);
 
+  // Combinamos datos para mostrar algo interesante en la demo (Ej: Hoteles de Zaragoza)
+  // Puedes cambiar esto según la lógica de tu filtro más adelante
+  const displayData = zaragozaHotels.length > 0 ? zaragozaHotels : [];
+
   return (
-    <>
-      <Header/>
-      <div style={{display: "flex"}}>
-        <Filter/>
-        <div>
-        <Cards data={zaragozaHotels}/>
-        </div>
-      </div>     
-    </>
-  )
+    <div className="app-container">
+      <Header />
+
+      <main className="main-content">
+        {/* Sidebar a la izquierda */}
+        <FilterSidebar />
+
+        {/* Grid de contenido a la derecha */}
+        <section>
+          {displayData.length === 0 ? (
+            <p style={{ textAlign: 'center', marginTop: '2rem' }}>Cargando experiencias...</p>
+          ) : (
+            <CardGrid data={displayData} />
+          )}
+        </section>
+      </main>
+    </div>
+  );
 }
 
-export default App
+export default App;
