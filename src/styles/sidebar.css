@@ -1,19 +1,78 @@
 .filter-sidebar {
     background-color: var(--color-white);
-    padding: 2rem;
-    border-radius: var(--radius);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    
     box-shadow: var(--shadow-soft);
     height: fit-content;
     position: sticky;
     top: 100px;
+    width: 80%;
+    padding: 2rem;
+    
+    /* Mantenemos el resto */
+    overflow: visible; 
+    z-index: 50;
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
+.filter-sidebar.collapsed {
+    width: 0;
+    padding: 2rem 0; 
+    background-color: transparent; 
+    box-shadow: none;
+}
+
+/* --- WRAPPER DE CONTENIDO (Nuevo) --- */
+.sidebar-content-wrapper {
+    width: 240px; 
+    opacity: 1;
+    transition: opacity 0.2s ease;
+    pointer-events: auto;
+}
+
+.filter-sidebar.collapsed .sidebar-content-wrapper {
+    opacity: 0;
+    pointer-events: none;
+}
+
+
+/* --- BOTÓN DE TOGGLE --- */
+.sidebar-toggle-btn {
+    position: absolute;
+    top: 20px;
+    right: -40px; 
+    width: 40px;
+    height: 40px;
+    
+    background-color: var(--color-black);
+    color: var(--color-white);
+    border: none;
+    border-radius: 0 8px 8px 0;
+    
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 4px 0 6px rgba(0,0,0,0.1);
+    transition: background 0.3s;
+    
+    visibility: visible;
+    opacity: 1;
+    z-index: 60;
+}
+
+.sidebar-toggle-btn:hover {
+    background-color: var(--color-orange);
+}
+
+/* Estilos internos (sin cambios) */
 .filter-sidebar h2 {
     font-size: 1.25rem;
     margin-bottom: 1.5rem;
     border-bottom: 2px solid var(--color-orange);
     padding-bottom: 0.5rem;
     display: inline-block;
+    white-space: nowrap;
 }
 
 .filter-group {
@@ -43,7 +102,7 @@
 }
 
 .input-text {
-    width: 100%;
+    width: 40%;
     padding: 0.6rem;
     border: 1px solid #ddd;
     border-radius: 6px;
@@ -54,10 +113,18 @@
     border-color: var(--color-orange);
 }
 
-/* Responsive del Sidebar */
+/* Responsive */
 @media (max-width: 768px) {
     .filter-sidebar {
         position: static;
-        margin-bottom: 2rem;
+        width: 100%;
+        padding: 2rem;
+    }
+    .filter-sidebar.collapsed {
+        width: 100%;
+        background-color: var(--color-white);
+    }
+    .sidebar-toggle-btn {
+        display: none; 
     }
 }
