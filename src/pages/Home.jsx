@@ -5,7 +5,7 @@ const Home = () => {
     return (
         <div className="home-container" style={{ maxWidth: '1200px', margin: '0 auto', padding: '4rem 2rem' }}>
 
-            {/* Hero Section */}
+            {/* Seccion intro */}
             <section style={{ textAlign: 'center', marginBottom: '4rem' }}>
                 <h1 style={{ fontSize: '3.5rem', marginBottom: '1rem', lineHeight: 1.1 }}>
                     Eat<span style={{ color: 'var(--color-orange)' }}>&</span>Rest

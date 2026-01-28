@@ -1,8 +1,6 @@
-/* styles/base.css */
-
 :root {
 	--sidebar-width: 300px;
-	--header-height: 80px; /* Ajusta según tu Header */
+	--header-height: 80px; 
 }
 
 * {
@@ -33,20 +31,19 @@ body {
 	width: 100%;
 	max-width: 1600px;
 	margin: 0 auto;
-	align-items: flex-start; /* Evita que el sidebar se estire innecesariamente */
+	align-items: flex-start;
 }
 
 /* Área de contenido (derecha) */
 .content-area {
-	flex: 1; /* Ocupa el espacio restante */
+	flex: 1; 
 	padding: 2rem;
-	min-width: 0; /* Truco CSS para evitar desbordamientos en flex items */
+	min-width: 0; 
 }
 
 /* El Grid EXCLUSIVO para las cartas */
 .cards-grid {
 	display: grid;
-	/* Columnas responsivas: mínimo 300px, máximo 1fr */
 	grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
 	gap: 2rem;
 	margin-top: 2rem;

@@ -1,11 +1,12 @@
 import React from "react";
-import "../styles/sidebar.css"; // Asegúrate de crear este archivo o pegar el CSS abajo
+import "../styles/sidebar.css";
 
 const FilterSidebar = ({ filters, onFilterChange }) => {
-	// Manejo de Inputs (Texto, Checkbox, Radio)
+	// Función para manejar cambios en inputs (texto, radio, checkbox)
 	const handleChange = (e) => {
 		const { name, value, type, checked } = e.target;
 
+		// Si es checkbox pasamos el estado 'checked', si no el 'value'
 		if (type === "checkbox") {
 			onFilterChange(name, checked);
 		} else {
@@ -18,7 +19,7 @@ const FilterSidebar = ({ filters, onFilterChange }) => {
 			<div className="sidebar-content">
 				<h2>Filtros</h2>
 
-				{/* --- BUSCADOR POR NOMBRE --- */}
+				{/* --- BÚSQUEDA POR NOMBRE --- */}
 				<div className="filter-group">
 					<label>Buscar por nombre</label>
 					<input
@@ -31,13 +32,13 @@ const FilterSidebar = ({ filters, onFilterChange }) => {
 					/>
 				</div>
 
-				{/* --- UBICACIÓN (RADIO BUTTONS - OPCIÓN ÚNICA) --- */}
+				{/* --- UBICACIÓN (RADIO BUTTONS) --- */}
 				<div className="filter-group">
 					<label>Ubicación (Obligatorio)</label>
 					<div className="radio-wrapper">
 						<input
 							type="radio"
-							name="location" // Mismo nombre para agrupar
+							name="location"
 							id="loc-zaragoza"
 							value="zaragoza"
 							checked={filters.location === "zaragoza"}
@@ -58,7 +59,7 @@ const FilterSidebar = ({ filters, onFilterChange }) => {
 					</div>
 				</div>
 
-				{/* --- TIPO (CHECKBOXES - MÚLTIPLE) --- */}
+				{/* --- TIPO DE LOCAL (CHECKBOXES) --- */}
 				<div className="filter-group">
 					<label>Tipo de Local</label>
 					<div className="checkbox-wrapper">

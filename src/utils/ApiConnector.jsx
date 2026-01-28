@@ -9,12 +9,12 @@ export const callRestaurants = async (
 		let normalizedData = [];
 		const start = (page - 1) * limit;
 
-		// --- ZARAGOZA (API Real con soporte de parámetros) ---
+		// --- ZARAGOZA (API con soporte de parámetros) ---
 		if (location === "zaragoza") {
-			// Construimos la URL con parámetros de paginación y búsqueda
 			let query = "";
+
+			// Añadir filtro de búsqueda si existe
 			if (searchText) {
-				// La API de Zaragoza usa 'title' para filtrar por nombre (sintaxis aproximada)
 				query = `&title=${encodeURIComponent(searchText)}`;
 			}
 
@@ -29,20 +29,22 @@ export const callRestaurants = async (
 			const json = await response.json();
 
 			if (json.result) {
-				normalizedData = json.result.map((item) => ({
-					id: item.id,
-					name: item.title,
-					image:
-						item.image || "https://via.placeholder.com/400x300?text=No+Image",
-					address: item.streetAddress || "Dirección no disponible",
-					postalCode: item.postalCode || "",
-					location: "Zaragoza",
-					type: type,
-					link: item.uri,
-				}));
+				// Filtrar elementos sin imagen y normalizar estructura
+				normalizedData = json.result
+					.filter((item) => item.image)
+					.map((item) => ({
+						id: item.id,
+						name: item.title,
+						image: item.image,
+						address: item.streetAddress || "Dirección no disponible",
+						postalCode: item.postalCode || "",
+						location: "Zaragoza",
+						type: type,
+						link: item.uri,
+					}));
 			}
 
-			// --- MURCIA (JSON Estático - Paginación Simulada) ---
+			// --- MURCIA (JSON Estático - Paginación en cliente) ---
 		} else if (location === "murcia") {
 			const url =
 				type === "restaurant"
@@ -52,7 +54,7 @@ export const callRestaurants = async (
 			const response = await fetch(url);
 			const json = await response.json();
 
-			// 1. Filtramos primero (por validez y por texto)
+			// 1. Filtrado (validación de datos y búsqueda por texto)
 			let filteredRaw = json.filter((item) => {
 				const hasData = item["Foto 1"] && item["URL Corta"];
 				if (!hasData) return false;
@@ -64,10 +66,10 @@ export const callRestaurants = async (
 				return true;
 			});
 
-			// 2. Paginamos manualmente (slice)
+			// 2. Paginación manual (slice)
 			const pagedRaw = filteredRaw.slice(start, start + limit);
 
-			// 3. Normalizamos
+			// 3. Normalización de estructura
 			normalizedData = pagedRaw.map((item) => ({
 				id: item.Registro || Math.random(),
 				name: item.Nombre,

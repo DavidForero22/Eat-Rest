@@ -3,11 +3,11 @@
 	background-color: white;
 	height: calc(100vh - var(--header-height)); /* Altura completa menos header */
 	position: sticky;
-	top: var(--header-height); /* Se pega justo debajo del header */
+	top: var(--header-height); 
 	border-right: 1px solid #e0e0e0;
 	padding: 2rem;
-	overflow-y: auto; /* Scroll si hay muchos filtros */
-	flex-shrink: 0; /* Evita que se encoja */
+	overflow-y: auto;
+	flex-shrink: 0; 
 }
 
 .filter-group {
@@ -40,7 +40,7 @@
 .checkbox-wrapper input {
 	margin-right: 10px;
 	transform: scale(1.2);
-	accent-color: #ff6600; /* Tu color naranja */
+	accent-color: #ff6600;
 }
 
 .radio-wrapper label,

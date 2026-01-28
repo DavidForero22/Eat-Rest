@@ -1,44 +1,44 @@
 import React, { useState, useEffect } from "react";
 import FilterSidebar from "../components/FilterSidebar";
-import Card from "../components/ui/Card"; // Asegúrate de la ruta correcta
+import Card from "../components/ui/Card";
 import { callRestaurants } from "../utils/ApiConnector";
 
 const Locales = () => {
 	const [items, setItems] = useState([]);
 	const [loading, setLoading] = useState(false);
 
-	// Estado de Paginación
+	// Estado para la paginación (página actual)
 	const [page, setPage] = useState(1);
 	const ITEMS_PER_PAGE = 9;
 
-	// Estado Unificado de Filtros
+	// Estado centralizado para todos los filtros
 	const [filters, setFilters] = useState({
-		location: "zaragoza", // Radio button: solo un valor string
+		location: "zaragoza", // Valor único (radio button)
 		restaurante: true,
 		hotel: false,
 		postalCode: "",
 		searchText: "",
 	});
 
-	// Actualizar filtros y resetear página a 1
+	// Actualiza el filtro modificado y reinicia la paginación a la primera página
 	const handleFilterChange = (key, value) => {
 		setFilters((prev) => ({ ...prev, [key]: value }));
-		setPage(1); // Importante: volver a la página 1 al filtrar
+		setPage(1);
 	};
 
-	// Cambiar página
+	// Controla el cambio de página asegurando que no sea menor a 1
 	const handlePageChange = (newPage) => {
 		if (newPage >= 1) setPage(newPage);
 	};
 
-	// EFECTO: Cargar datos cuando cambian filtros o página
+	// Efecto principal: Se ejecuta al cambiar filtros o página para cargar datos
 	useEffect(() => {
 		const loadData = async () => {
 			setLoading(true);
 			let newData = [];
 
 			try {
-				// 1. Buscar Restaurantes si está activo
+				// Si el filtro "restaurante" está activo, llamamos a la API correspondiente
 				if (filters.restaurante) {
 					const rests = await callRestaurants(
 						filters.location,
@@ -50,7 +50,7 @@ const Locales = () => {
 					newData = [...newData, ...rests];
 				}
 
-				// 2. Buscar Hoteles si está activo
+				// Si el filtro "hotel" está activo, llamamos a la API correspondiente
 				if (filters.hotel) {
 					const hotels = await callRestaurants(
 						filters.location,
@@ -69,15 +69,15 @@ const Locales = () => {
 			setLoading(false);
 		};
 
-		// Debounce para la búsqueda de texto (opcional pero recomendado)
+		// Debounce: Espera 300ms antes de llamar a la API para evitar múltiples llamadas al escribir
 		const timer = setTimeout(() => {
 			loadData();
 		}, 300);
 
 		return () => clearTimeout(timer);
-	}, [filters, page]); // Dependencias: cualquier cambio en filtros o página dispara la carga
+	}, [filters, page]);
 
-	// Filtrado FINAL por CP (siempre en cliente para simplificar)
+	// Filtrado en cliente para el Código Postal (evita recargar la API solo por esto)
 	const displayedItems = items.filter((item) => {
 		if (!filters.postalCode) return true;
 		return String(item.postalCode).includes(filters.postalCode);
@@ -85,10 +85,10 @@ const Locales = () => {
 
 	return (
 		<div className="main-layout">
-			{/* Sidebar Fija */}
+			{/* Sidebar fija con los controles de filtrado */}
 			<FilterSidebar filters={filters} onFilterChange={handleFilterChange} />
 
-			{/* Contenido Derecha */}
+			{/* Área principal de contenido */}
 			<main className="content-area">
 				<h1 style={{ fontSize: "2rem", marginBottom: "0.5rem" }}>
 					Resultados en{" "}
@@ -120,7 +120,7 @@ const Locales = () => {
 							</div>
 						)}
 
-						{/* Controles de Paginación */}
+						{/* Botones de navegación para la paginación */}
 						<div className="pagination-controls">
 							<button
 								className="pagination-btn"
@@ -135,8 +135,7 @@ const Locales = () => {
 							<button
 								className="pagination-btn"
 								onClick={() => handlePageChange(page + 1)}
-								// Deshabilitar "Siguiente" si trajimos menos items de los pedidos
-								// (significa que se acabaron)
+								// Deshabilitamos "Siguiente" si se recibieron menos elementos de los solicitados (fin de lista)
 								disabled={
 									items.length < ITEMS_PER_PAGE &&
 									filters.restaurante !== filters.hotel

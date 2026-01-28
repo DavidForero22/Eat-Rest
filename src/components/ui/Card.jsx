@@ -1,4 +1,3 @@
-import React from 'react';
 import cardLayout from '../../assets/img-layout.png';
 
 const Card = ({ title, image, description, link }) => {
