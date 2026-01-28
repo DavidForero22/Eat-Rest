@@ -1,43 +1,87 @@
-/* Body resets and styles */
+:root {
+	--sidebar-width: 300px;
+	--header-height: 80px; 
+}
 
 * {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+	font-family:
+		"Inter",
+		system-ui,
+		-apple-system,
+		sans-serif;
 }
 
 body {
-  background-color: var(--color-light-gray);
-  color: var(--color-black);
+	background-color: #f4f6f8;
+	color: #333;
 }
 
 .app-container {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
 }
 
-.main-content {
-    display: grid;
-    grid-template-columns: 280px 1fr;
-    gap: 0;
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 2rem 0; 
-    
-    width: 100%;
-    transition: grid-template-columns 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-    position: relative;
+/* Contenedor principal: Sidebar fija a la izq, contenido a la derecha */
+.main-layout {
+	display: flex;
+	width: 100%;
+	max-width: 1600px;
+	margin: 0 auto;
+	align-items: flex-start;
 }
 
-.main-content.sidebar-collapsed {
-    grid-template-columns: 0px 1fr;
+/* Área de contenido (derecha) */
+.content-area {
+	flex: 1; 
+	padding: 2rem;
+	min-width: 0; 
 }
 
+/* El Grid EXCLUSIVO para las cartas */
+.cards-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+	gap: 2rem;
+	margin-top: 2rem;
+}
+
+/* Paginación */
+.pagination-controls {
+	display: flex;
+	justify-content: center;
+	gap: 1rem;
+	margin-top: 3rem;
+	padding-bottom: 2rem;
+}
+
+.pagination-btn {
+	padding: 0.5rem 1.5rem;
+	background-color: #333;
+	color: white;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+}
+
+.pagination-btn:disabled {
+	background-color: #ccc;
+	cursor: not-allowed;
+}
+
+/* Responsive: En móviles el sidebar pasa arriba o desaparece según prefieras */
 @media (max-width: 768px) {
-    .main-content, .main-content.sidebar-collapsed {
-        grid-template-columns: 1fr;
-        padding: 2rem; 
-    }
+	.main-layout {
+		flex-direction: column;
+	}
+
+	.filter-sidebar {
+		width: 100%;
+		position: relative;
+		top: 0;
+		height: auto;
+	}
 }
